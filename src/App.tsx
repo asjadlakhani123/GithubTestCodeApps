@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
-import { Devpub_table1sService, Devpub_table2sService } from './generated'
+import { Devpub_table1sService, Devpub_table2sService, Devpub_table3sService } from './generated'
 import type { Devpub_table1s } from './generated/models/Devpub_table1sModel'
 import type { Devpub_table2s } from './generated/models/Devpub_table2sModel'
+import type { Devpub_table3s } from './generated/models/Devpub_table3sModel'
 import './App.css'
 
 function App() {
-  const [activeTab, setActiveTab] = useState<'table1' | 'table2'>('table1')
+  const [activeTab, setActiveTab] = useState<'table1' | 'table2' | 'table3'>('table1')
 
   // Table 1 state
   const [t1Records, setT1Records] = useState<Devpub_table1s[]>([])
@@ -16,6 +17,11 @@ function App() {
   const [t2Records, setT2Records] = useState<Devpub_table2s[]>([])
   const [t2Loading, setT2Loading] = useState(true)
   const [t2Error, setT2Error] = useState<string | null>(null)
+
+  // Table 3 state
+  const [t3Records, setT3Records] = useState<Devpub_table3s[]>([])
+  const [t3Loading, setT3Loading] = useState(true)
+  const [t3Error, setT3Error] = useState<string | null>(null)
 
   useEffect(() => {
     Devpub_table1sService.getAll({ select: ['devpub_title', 'createdon'] })
@@ -29,6 +35,13 @@ function App() {
       .then((result) => setT2Records(result.data ?? []))
       .catch((err) => setT2Error(err?.message ?? 'Failed to load records'))
       .finally(() => setT2Loading(false))
+  }, [])
+
+  useEffect(() => {
+    Devpub_table3sService.getAll({ select: ['devpub_title', 'createdon'] })
+      .then((result) => setT3Records(result.data ?? []))
+      .catch((err) => setT3Error(err?.message ?? 'Failed to load records'))
+      .finally(() => setT3Loading(false))
   }, [])
 
   return (
@@ -45,6 +58,12 @@ function App() {
           onClick={() => setActiveTab('table2')}
         >
           Table 2 Data
+        </button>
+        <button
+          className={`tab${activeTab === 'table3' ? ' tab--active' : ''}`}
+          onClick={() => setActiveTab('table3')}
+        >
+          Table 3 Data
         </button>
       </div>
 
@@ -100,6 +119,36 @@ function App() {
                   ) : (
                     t2Records.map((row) => (
                       <tr key={row.devpub_table2id}>
+                        <td>{row.devpub_title}</td>
+                        <td>{row.createdon ? new Date(row.createdon).toLocaleString() : '—'}</td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            )}
+          </>
+        )}
+        {activeTab === 'table3' && (
+          <>
+            {t3Loading && <p className="status">Loading...</p>}
+            {t3Error && <p className="status status--error">{t3Error}</p>}
+            {!t3Loading && !t3Error && (
+              <table className="data-table">
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th>Created On</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {t3Records.length === 0 ? (
+                    <tr>
+                      <td colSpan={2} className="empty">No records found.</td>
+                    </tr>
+                  ) : (
+                    t3Records.map((row) => (
+                      <tr key={row.devpub_table3id}>
                         <td>{row.devpub_title}</td>
                         <td>{row.createdon ? new Date(row.createdon).toLocaleString() : '—'}</td>
                       </tr>
