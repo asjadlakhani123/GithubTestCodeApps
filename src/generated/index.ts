@@ -6,6 +6,8 @@
 // Models
 export * as CommonModels from './models/CommonModels';
 export * as Devpub_table1sModel from './models/Devpub_table1sModel';
+export * as Devpub_table2sModel from './models/Devpub_table2sModel';
 
 // Services
 export * from './services/Devpub_table1sService';
+export * from './services/Devpub_table2sService';

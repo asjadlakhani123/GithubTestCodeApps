@@ -17,6 +17,11 @@
           "entitySetName": "devpub_table1s",
           "logicalName": "devpub_table1",
           "isHidden": false
+        },
+        "table2s": {
+          "entitySetName": "devpub_table2s",
+          "logicalName": "devpub_table2",
+          "isHidden": false
         }
       },
       "environmentVariableName": ""
