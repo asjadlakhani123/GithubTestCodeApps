@@ -18,5 +18,12 @@ export const dataSourcesInfo = {
     "primaryKey": "devpub_table2id",
     "dataSourceType": "Dataverse",
     "apis": {}
+  },
+  "devpub_table3s": {
+    "tableId": "",
+    "version": "",
+    "primaryKey": "devpub_table3id",
+    "dataSourceType": "Dataverse",
+    "apis": {}
   }
 };
