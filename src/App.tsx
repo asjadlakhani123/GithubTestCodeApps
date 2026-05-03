@@ -38,7 +38,7 @@ function App() {
   }, [])
 
   useEffect(() => {
-    Devpub_table3sService.getAll({ select: ['devpub_title', 'createdon'] })
+    Devpub_table3sService.getAll({ select: ['devpub_title', 'createdon', 'modifiedon'] })
       .then((result) => setT3Records(result.data ?? []))
       .catch((err) => setT3Error(err?.message ?? 'Failed to load records'))
       .finally(() => setT3Loading(false))
@@ -141,18 +141,20 @@ function App() {
                   <tr>
                     <th>Title</th>
                     <th>Created On</th>
+                    <th>Modified On</th>
                   </tr>
                 </thead>
                 <tbody>
                   {t3Records.length === 0 ? (
                     <tr>
-                      <td colSpan={2} className="empty">No records found.</td>
+                      <td colSpan={3} className="empty">No records found.</td>
                     </tr>
                   ) : (
                     t3Records.map((row) => (
                       <tr key={row.devpub_table3id}>
                         <td>{row.devpub_title}</td>
                         <td>{row.createdon ? new Date(row.createdon).toLocaleString() : '—'}</td>
+                        <td>{row.modifiedon ? new Date(row.modifiedon).toLocaleString() : '—'}</td>
                       </tr>
                     ))
                   )}
