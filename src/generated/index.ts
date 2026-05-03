@@ -7,7 +7,9 @@
 export * as CommonModels from './models/CommonModels';
 export * as Devpub_table1sModel from './models/Devpub_table1sModel';
 export * as Devpub_table2sModel from './models/Devpub_table2sModel';
+export * as Devpub_table3sModel from './models/Devpub_table3sModel';
 
 // Services
 export * from './services/Devpub_table1sService';
 export * from './services/Devpub_table2sService';
+export * from './services/Devpub_table3sService';
