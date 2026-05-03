@@ -1,34 +1,61 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useEffect, useState } from 'react'
+import { Devpub_table1sService } from './generated'
+import type { Devpub_table1s } from './generated/models/Devpub_table1sModel'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [records, setRecords] = useState<Devpub_table1s[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    Devpub_table1sService.getAll({
+      select: ['devpub_title', 'createdon'],
+    })
+      .then((result) => {
+        setRecords(result.data ?? [])
+      })
+      .catch((err) => {
+        setError(err?.message ?? 'Failed to load records')
+      })
+      .finally(() => setLoading(false))
+  }, [])
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="page">
+      <div className="tabs">
+        <button className="tab tab--active">Table 1 Data</button>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+
+      <div className="tab-content">
+        {loading && <p className="status">Loading...</p>}
+        {error && <p className="status status--error">{error}</p>}
+        {!loading && !error && (
+          <table className="data-table">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Created On</th>
+              </tr>
+            </thead>
+            <tbody>
+              {records.length === 0 ? (
+                <tr>
+                  <td colSpan={2} className="empty">No records found.</td>
+                </tr>
+              ) : (
+                records.map((row) => (
+                  <tr key={row.devpub_table1id}>
+                    <td>{row.devpub_title}</td>
+                    <td>{row.createdon ? new Date(row.createdon).toLocaleString() : '—'}</td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        )}
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </div>
   )
 }
 

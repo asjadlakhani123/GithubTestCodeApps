@@ -1,42 +1,96 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  font-size: 14px;
+  background: #f5f5f5;
+  color: #1f1f1f;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+/* Tabs */
+.tabs {
+  display: flex;
+  border-bottom: 2px solid #d0d0d0;
+  background: #fff;
+  padding: 0 16px;
 }
 
-.card {
-  padding: 2em;
+.tab {
+  padding: 12px 20px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: inherit;
+  color: #555;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
 }
 
-.read-the-docs {
+.tab--active {
+  color: #0078d4;
+  border-bottom-color: #0078d4;
+  font-weight: 600;
+}
+
+/* Tab content */
+.tab-content {
+  flex: 1;
+  padding: 20px;
+  overflow: auto;
+}
+
+/* Table */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border: 1px solid #d0d0d0;
+}
+
+.data-table th,
+.data-table td {
+  text-align: left;
+  padding: 10px 14px;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.data-table th {
+  background: #f0f0f0;
+  font-weight: 600;
+  color: #333;
+}
+
+.data-table tr:last-child td {
+  border-bottom: none;
+}
+
+.data-table tbody tr:hover {
+  background: #f5faff;
+}
+
+/* Status messages */
+.status {
+  padding: 16px;
+  color: #555;
+}
+
+.status--error {
+  color: #c00;
+}
+
+.empty {
   color: #888;
+  font-style: italic;
+  text-align: center;
 }
