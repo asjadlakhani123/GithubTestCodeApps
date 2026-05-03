@@ -31,7 +31,7 @@ function App() {
   }, [])
 
   useEffect(() => {
-    Devpub_table2sService.getAll({ select: ['devpub_title', 'createdon', 'modifiedon'] })
+    Devpub_table2sService.getAll({ select: ['devpub_title', 'createdon'] })
       .then((result) => setT2Records(result.data ?? []))
       .catch((err) => setT2Error(err?.message ?? 'Failed to load records'))
       .finally(() => setT2Loading(false))
@@ -109,20 +109,18 @@ function App() {
                   <tr>
                     <th>Title</th>
                     <th>Created On</th>
-                    <th>Modified On</th>
                   </tr>
                 </thead>
                 <tbody>
                   {t2Records.length === 0 ? (
                     <tr>
-                      <td colSpan={3} className="empty">No records found.</td>
+                      <td colSpan={2} className="empty">No records found.</td>
                     </tr>
                   ) : (
                     t2Records.map((row) => (
                       <tr key={row.devpub_table2id}>
                         <td>{row.devpub_title}</td>
                         <td>{row.createdon ? new Date(row.createdon).toLocaleString() : '—'}</td>
-                        <td>{row.modifiedon ? new Date(row.modifiedon).toLocaleString() : '—'}</td>
                       </tr>
                     ))
                   )}
